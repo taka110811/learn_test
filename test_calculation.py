@@ -26,6 +26,10 @@ class TestCalTest():
             tmpdir, self.test_file_name)
         assert os.path.exists(test_file_path) is True
 
+    def test_add_and_num_double_raise(self):
+        with pytest.raises(ValueError):
+            self.cal.add_num_and_double('1', '1')
+
 if __name__ == '__main__':
     pytest.main()
 
