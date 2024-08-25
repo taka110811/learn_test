@@ -22,10 +22,13 @@ class TestCalTest():
         print('method={}'.format(method.__name__))
         # del self.cal
 
-    # @pytest.mark.skip(reason='skip!')
-    @pytest.mark.skipif(is_release==True,
-                        reason='skip!')
-    def test_add_num_and_double(self):
+    def test_add_num_and_double(self, request):
+        os_name = request.config.getoption('--os-name')
+        print(os_name)
+        if os_name == 'mac':
+            print('mac')
+        if os_name == 'windows':
+            print('windows')
         assert self.cal.add_num_and_double(1,1) == 4    
 
     def test_add_num_and_double_raise(self):
