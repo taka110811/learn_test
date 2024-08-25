@@ -1,3 +1,4 @@
+import os
 import pytest
 import calculation
 is_release = True
@@ -8,28 +9,18 @@ class TestCalTest():
     def setup_class(cls):
         print('start')
         cls.cal = calculation.Cal()
+        cls.test_file_name = 'text.txt'
 
     @classmethod
     def teardown_class(cls):
         print('end')
         del cls.cal
 
-    def setup_method(self, method):
-        print('method={}'.format(method.__name__))
-        # self.cal = calculation.Cal()
-
-    def teardown_method(self, method):
-        print('method={}'.format(method.__name__))
-        # del self.cal
-
-    def test_add_num_and_double(self, request):
-        os_name = request.config.getoption('--os-name')
-        print(os_name)
-        if os_name == 'mac':
-            print('mac')
-        if os_name == 'windows':
-            print('windows')
-        assert self.cal.add_num_and_double(1,1) == 4    
+    def test_save(self, tmpdir):
+        self.cal.save(tmpdir, self.test_file_name)
+        test_file_path = os.path.join(
+            tmpdir, self.test_file_name)
+        assert os.path.exists(test_file_path) is True
 
     def test_add_num_and_double_raise(self):
         with pytest.raises(ValueError):
